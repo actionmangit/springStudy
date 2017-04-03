@@ -1,11 +1,16 @@
 package com.hyoungki.study.dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DConnectionMaker implements ConnectionMaker{
 
 	public Connection makeConnection() throws ClassNotFoundException, SQLException {
-		return null;
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection			c		= DriverManager.getConnection(
+				"jdbc:oracle:thin:@localhost:1521:xe", "curix", "1234");
+		
+		return c;
 	}
 }
