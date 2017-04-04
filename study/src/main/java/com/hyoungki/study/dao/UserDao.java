@@ -6,19 +6,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import com.hyoungki.study.domain.User;
 
 //public abstract class UserDao {
 public class UserDao {	
-	private ConnectionMaker connectionMaker;
+//	private ConnectionMaker connectionMaker;
+//	
+//	public void setConnectionMaker(ConnectionMaker connectionMaker) {
+//		this.connectionMaker	= connectionMaker;
+//	}
 	
-	public void setConnectionMaker(ConnectionMaker connectionMaker) {
-		this.connectionMaker	= connectionMaker;
+	private DataSource	dataSource;
+	
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource	= dataSource;
 	}
 	
 	public void add(User user) throws SQLException, ClassNotFoundException {
 
-		Connection			c	= connectionMaker.makeConnection();
+//		Connection			c	= connectionMaker.makeConnection();
+		Connection			c	= dataSource.getConnection();
 		
 		PreparedStatement	ps	= c.prepareStatement(
 				"insert into users(id, name, password) values(?,?,?)");
@@ -35,7 +44,8 @@ public class UserDao {
 	
 	public User get(String id) throws SQLException, ClassNotFoundException {
 		
-		Connection			c		= connectionMaker.makeConnection();
+//		Connection			c		= connectionMaker.makeConnection();
+		Connection			c	= dataSource.getConnection();
 		
 		PreparedStatement	ps		= c.prepareStatement(
 				"select * from users where id = ?");
