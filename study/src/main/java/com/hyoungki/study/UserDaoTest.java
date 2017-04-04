@@ -42,8 +42,6 @@ public class UserDaoTest
     
 	@Test
 	public void andAndGet() throws ClassNotFoundException, SQLException {
-		User		user1	= new User("lhk", "횽긔", "1234");
-		User		user2	= new User("kimbo", "김보", "1234");
 		
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
@@ -64,9 +62,6 @@ public class UserDaoTest
 
 	@Test
 	public void count() throws SQLException, ClassNotFoundException {
-		User		user1	= new User("lhk", "횽긔", "1234");
-		User		user2	= new User("kimbo", "김보", "1234");
-		User		user3	= new User("mung", "뭉이", "1234");
 		
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
