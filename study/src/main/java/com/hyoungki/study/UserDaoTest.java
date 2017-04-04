@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.springframework.context.ApplicationContext;
@@ -17,24 +18,35 @@ import com.hyoungki.study.domain.User;
 
 public class UserDaoTest 
 {
-    public static void main( String[] args ) throws ClassNotFoundException, SQLException
+    private	UserDao	dao;
+    private User	user1;
+    private User	user2;
+    private User	user3;
+	
+	public static void main( String[] args ) throws ClassNotFoundException, SQLException
     {
         JUnitCore.main("com.hyoungki.study.UserDaoTest");
     }
     
-	@Test
-	public void andAndGet() throws ClassNotFoundException, SQLException {
+    @Before
+    public void setUp() {
 		ApplicationContext		context	= new
 				ClassPathXmlApplicationContext("applicationContext.xml");
 		
-		UserDao		dao		= context.getBean("userDao", UserDao.class);
+		this.dao	= context.getBean("userDao", UserDao.class);
+		
+		this.user1	= new User("lhk", "횽긔", "1234");
+		this.user2	= new User("kimbo", "김보", "1234");
+		this.user3	= new User("mung", "뭉이", "1234");
+    }
+    
+	@Test
+	public void andAndGet() throws ClassNotFoundException, SQLException {
 		User		user1	= new User("lhk", "횽긔", "1234");
 		User		user2	= new User("kimbo", "김보", "1234");
 		
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
-		
-		User		user	= new User("kimbo", "김보", "1234");
 		
 		dao.add(user1);
 		dao.add(user2);
@@ -52,9 +64,6 @@ public class UserDaoTest
 
 	@Test
 	public void count() throws SQLException, ClassNotFoundException {
-		ApplicationContext		context	= new GenericXmlApplicationContext("applicationContext.xml");
-		
-		UserDao		dao		= context.getBean("userDao", UserDao.class);
 		User		user1	= new User("lhk", "횽긔", "1234");
 		User		user2	= new User("kimbo", "김보", "1234");
 		User		user3	= new User("mung", "뭉이", "1234");
@@ -75,9 +84,6 @@ public class UserDaoTest
 	
 	@Test(expected=EmptyResultDataAccessException.class)
 	public void getUserFailure() throws SQLException, ClassNotFoundException {
-		ApplicationContext		context	= new GenericXmlApplicationContext("applicationContext.xml");
-		
-		UserDao		dao	= context.getBean("userDao", UserDao.class);
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
 		
