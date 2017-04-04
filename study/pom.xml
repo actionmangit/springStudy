@@ -29,8 +29,16 @@
 	<dependency>
 	    <groupId>org.springframework</groupId>
 	    <artifactId>spring-jdbc</artifactId>
-	    <version>4.3.7.RELEASE</version>
-	</dependency>    
+	    <version>3.2.18.RELEASE</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-test</artifactId>
+	    <version>3.2.18.RELEASE</version>
+	</dependency>
+
+	    
 	
 <!-- 	<dependency> -->
 <!-- 	    <groupId>org.junit</groupId> -->
