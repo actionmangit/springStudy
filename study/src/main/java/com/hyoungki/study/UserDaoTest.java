@@ -22,7 +22,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hyoungki.study.dao.UserDao;
 import com.hyoungki.study.domain.User;
 
-@DirtiesContext
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="/test-applicationContext.xml")
 public class UserDaoTest 
 {
 	@Autowired
@@ -41,11 +42,6 @@ public class UserDaoTest
 		this.user1	= new User("lhk", "횽긔", "1234");
 		this.user2	= new User("kimbo", "김보", "1234");
 		this.user3	= new User("mung", "뭉이", "1234");
-		
-    	DataSource	dataSource	= new SingleConnectionDataSource(
-    			"jdbc:oracle:thin:@localhost:1521:xe", "curix", "1234", true); 
-
-    	dao.setDataSource(dataSource);
     }
     
 	@Test
