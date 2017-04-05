@@ -23,22 +23,19 @@ import com.hyoungki.study.domain.User;
 public class UserDaoTest 
 {
 	@Autowired
-	private ApplicationContext	context;
-	
     private	UserDao	dao;
+	
     private User	user1;
     private User	user2;
     private User	user3;
 	
-	public static void main( String[] args ) throws ClassNotFoundException, SQLException
-    {
+	public static void main( String[] args ) throws ClassNotFoundException, SQLException {
         JUnitCore.main("com.hyoungki.study.UserDaoTest");
     }
     
     @Before
     public void setUp() {
-		this.dao	= context.getBean("userDao", UserDao.class);
-		
+    	
 		this.user1	= new User("lhk", "횽긔", "1234");
 		this.user2	= new User("kimbo", "김보", "1234");
 		this.user3	= new User("mung", "뭉이", "1234");
