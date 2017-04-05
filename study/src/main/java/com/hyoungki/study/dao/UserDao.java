@@ -79,7 +79,9 @@ public class UserDao {
 
 		try {
 			c	= dataSource.getConnection();
-			ps	= c.prepareStatement("delete from users");
+			
+			ps	= makeStatement(c);
+			
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw e;
@@ -99,6 +101,13 @@ public class UserDao {
 			}
 		}
 	}
+
+	private PreparedStatement makeStatement(Connection c) throws SQLException {
+		PreparedStatement	ps;
+		ps	= c.prepareStatement("delete from users");
+		return ps;
+	}
+	
 	
 	public int getCount() throws SQLException {
 		Connection			c	= null;
@@ -137,15 +146,4 @@ public class UserDao {
 		}
 	}
 
-
-//	public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
-	
-//	private Connection getConnection() throws ClassNotFoundException, SQLException {
-//
-//		Class.forName("oracle.jdbc.driver.OracleDriver");
-//		Connection			c		= DriverManager.getConnection(
-//				"jdbc:oracle:thin:@localhost:1521:xe", "curix", "1234");
-//		
-//		return c;
-//	}
 }
