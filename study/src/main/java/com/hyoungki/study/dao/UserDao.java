@@ -80,7 +80,8 @@ public class UserDao {
 		try {
 			c	= dataSource.getConnection();
 			
-			ps	= makeStatement(c);
+			StatementStrategy	st	= new DeleteAllStatement();
+			ps	= st.makePreparedStatement(c);
 			
 			ps.executeUpdate();
 		} catch (SQLException e) {
