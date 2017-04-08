@@ -14,5 +14,10 @@
 	
 	<bean id="userDao" class="com.hyoungki.study.dao.UserDao" >
 		<property name="dataSource" ref="dataSource"/>
+		<property name="jdbcContext" ref="jdbcContext"/>
+	</bean>
+	
+	<bean id="jdbcContext" class="com.hyoungki.study.dao.JdbcContext">
+		<property name="dataSource" ref="dataSource"/>
 	</bean>
 </beans>

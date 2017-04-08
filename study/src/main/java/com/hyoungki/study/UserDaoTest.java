@@ -19,12 +19,14 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hyoungki.study.dao.JdbcContext;
 import com.hyoungki.study.dao.UserDao;
 import com.hyoungki.study.domain.User;
 
 public class UserDaoTest 
 {
     private	UserDao	dao;
+    private JdbcContext jdbcContext;
 	
     private User	user1;
     private User	user2;
@@ -40,12 +42,16 @@ public class UserDaoTest
 		this.user2	= new User("kimbo", "김보", "1234");
 		this.user3	= new User("mung", "뭉이", "1234");
 		
-		dao		= new UserDao();
+		dao				= new UserDao();
+		jdbcContext		= new JdbcContext();
 		
 		DataSource		dataSource	= new SingleConnectionDataSource(
 				"jdbc:oracle:thin:@localhost:1521:xe", "curix", "1234", true);
 		
+		jdbcContext.setDataSource(dataSource);
+		
 		dao.setDataSource(dataSource);
+		dao.setJdbcContext(jdbcContext);
     }
     
 	@Test
