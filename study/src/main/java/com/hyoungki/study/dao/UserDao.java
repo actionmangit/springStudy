@@ -44,6 +44,11 @@ public class UserDao {
 		);
 	}
 	
+	public void deleteAll() throws SQLException {
+		
+		this.jdbcContext.executeSql("delete from users");
+	}	
+	
 	public User get(String id) throws SQLException, ClassNotFoundException {
 		
 //		Connection			c		= connectionMaker.makeConnection();
@@ -71,11 +76,6 @@ public class UserDao {
 		if (user == null) throw new EmptyResultDataAccessException(1);
 		
 		return user;
-	}
-	
-	public void deleteAll() throws SQLException {
-			
-		this.jdbcContext.executeSql("delete from users");
 	}
 	
 	private PreparedStatement makeStatement(Connection c) throws SQLException {
