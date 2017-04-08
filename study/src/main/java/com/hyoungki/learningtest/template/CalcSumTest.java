@@ -5,9 +5,12 @@ import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class CalcSumTest {
+
+	
 	@Test
 	public void sumOfNumbers() throws IOException {
 		Calculator		calculator	= new Calculator();
