@@ -20,28 +20,22 @@ import com.hyoungki.study.domain.User;
 
 public class UserDao {	
 
-	private RowMapper<User> userMapper	= 
-		new RowMapper<User>() {
-			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				User	user	= new User();
-				user.setId(rs.getString("id"));
-				user.setName(rs.getString("name"));
-				user.setPassword(rs.getString("password"));
-				
-				return user;
-			}
-	};
-	
-	private JdbcContext jdbcContext;
-	private JdbcTemplate jdbcTemplate;
-	
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate	= new JdbcTemplate(dataSource);
 	}
+	private JdbcTemplate jdbcTemplate;
 	
-	public void setJdbcContext(JdbcContext jdbcContext) {
-		this.jdbcContext	= jdbcContext;
-	}
+	private RowMapper<User> userMapper	= 
+			new RowMapper<User>() {
+		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+			User	user	= new User();
+			user.setId(rs.getString("id"));
+			user.setName(rs.getString("name"));
+			user.setPassword(rs.getString("password"));
+			
+			return user;
+		}
+	};
 	
 	public void add(final User user) throws SQLException, ClassNotFoundException {
 		this.jdbcTemplate.update("insert into users(id, name, password) values(?,?,?)",
@@ -65,13 +59,6 @@ public class UserDao {
 			new Object[] {id},
 			this.userMapper);
 	}
-	
-	private PreparedStatement makeStatement(Connection c) throws SQLException {
-		PreparedStatement	ps;
-		ps	= c.prepareStatement("delete from users");
-		return ps;
-	}
-	
 	
 	public int getCount() throws SQLException {
 		return this.jdbcTemplate.queryForInt("select count(*) from users");
