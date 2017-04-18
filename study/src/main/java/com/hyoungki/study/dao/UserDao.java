@@ -1,19 +1,12 @@
 package com.hyoungki.study.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.hyoungki.study.domain.User;
@@ -37,12 +30,12 @@ public class UserDao {
 		}
 	};
 	
-	public void add(final User user) throws SQLException, ClassNotFoundException {
+	public void add(final User user) {
 		this.jdbcTemplate.update("insert into users(id, name, password) values(?,?,?)",
 				user.getId(), user.getName(), user.getPassword());
 	}
 	
-	public void deleteAll() throws SQLException {
+	public void deleteAll() {
 		
 		this.jdbcTemplate.update("delete from users");
 	}	
@@ -53,14 +46,14 @@ public class UserDao {
 			this.userMapper);
 	}
 	
-	public User get(String id) throws SQLException, ClassNotFoundException {
+	public User get(String id) {
 		
 		return this.jdbcTemplate.queryForObject("select * from users where id = ?",
 			new Object[] {id},
 			this.userMapper);
 	}
 	
-	public int getCount() throws SQLException {
+	public int getCount() {
 		return this.jdbcTemplate.queryForInt("select count(*) from users");
 	}
 }
