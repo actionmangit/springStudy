@@ -12,7 +12,7 @@
 		<property name="password" value="1234"/>
 	</bean>
 	
-	<bean id="userDao" class="com.hyoungki.study.dao.UserDao" >
+	<bean id="userDao" class="com.hyoungki.study.dao.UserDaoJdbc" >
 		<property name="dataSource" ref="dataSource"/>
 		<property name="jdbcContext" ref="jdbcContext"/>
 	</bean>

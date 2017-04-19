@@ -21,12 +21,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hyoungki.study.dao.JdbcContext;
-import com.hyoungki.study.dao.UserDao;
+import com.hyoungki.study.dao.UserDaoJdbc;
 import com.hyoungki.study.domain.User;
 
 public class UserDaoTest 
 {
-    private	UserDao	dao;
+    private	UserDaoJdbc	dao;
     private JdbcContext jdbcContext;
 	
     private User	user1;
@@ -43,7 +43,7 @@ public class UserDaoTest
 		this.user2	= new User("lhk", "횽긔", "1234");
 		this.user3	= new User("mung", "뭉이", "1234");
 		
-		dao				= new UserDao();
+		dao				= new UserDaoJdbc();
 		jdbcContext		= new JdbcContext();
 		
 		DataSource		dataSource	= new SingleConnectionDataSource(

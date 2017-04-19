@@ -7,7 +7,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import com.hyoungki.study.dao.CountingConnectionMaker;
 import com.hyoungki.study.dao.CountingDaoFactory;
-import com.hyoungki.study.dao.UserDao;
+import com.hyoungki.study.dao.UserDaoJdbc;
 import com.hyoungki.study.domain.User;
 
 public class UserDaoConnectionCountingTest {
@@ -16,7 +16,7 @@ public class UserDaoConnectionCountingTest {
     	ApplicationContext	context		= 
     			new AnnotationConfigApplicationContext(CountingDaoFactory.class);
     	
-    	UserDao				dao			= context.getBean("userDao", UserDao.class);
+    	UserDaoJdbc				dao			= context.getBean("userDao", UserDaoJdbc.class);
         
         User		user	= new User();
         user.setId("whiteship");
