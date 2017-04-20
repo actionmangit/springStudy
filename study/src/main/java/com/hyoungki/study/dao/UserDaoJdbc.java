@@ -31,14 +31,15 @@ public class UserDaoJdbc implements UserDao{
 		}
 	};
 	
+//	public void add(final User user) throws DuplicateKeyException {
 	public void add(final User user) throws DuplicateKeyException {
-		try {
+//		try {
 			this.jdbcTemplate.update("insert into users(id, name, password) values(?,?,?)",
 					user.getId(), user.getName(), user.getPassword());
-		}
-		catch (DuplicateKeyException e) {
-			throw new DuplicateUserIdException(e);
-		}
+//		}
+//		catch (DuplicateKeyException e) {
+//			throw new DuplicateUserIdException(e);
+//		}
 	}
 	
 	public void deleteAll() {

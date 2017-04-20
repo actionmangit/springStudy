@@ -14,6 +14,8 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.test.annotation.DirtiesContext;
@@ -54,6 +56,16 @@ public class UserDaoTest
 		dao.setDataSource(dataSource);
     }
 
+//    @Test(expected=DataAccessException.class)
+    @Test(expected=DuplicateKeyException.class)
+    public void duplicateKey() {
+    	dao.deleteAll();
+    	
+    	dao.add(user1);
+    	dao.add(user1);
+    }
+    
+    
     @Test
     public void getAll() throws SQLException, ClassNotFoundException {
     	dao.deleteAll();
