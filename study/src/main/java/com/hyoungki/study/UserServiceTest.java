@@ -36,8 +36,8 @@ public class UserServiceTest {
 		users	= Arrays.asList(
 				new User("kimbo", "김보", "1234", Level.BASIC, 49, 0), 
 				new User("lhk", "횽긔", "1234", Level.BASIC, 50, 0), 
-				new User("mung", "뭉이", "1234", Level.SIVER, 60, 29),	
-				new User("beck", "백도르", "1234", Level.SIVER, 60, 30),
+				new User("mung", "뭉이", "1234", Level.SILVER, 60, 29),	
+				new User("beck", "백도르", "1234", Level.SILVER, 60, 30),
 				new User("lion", "라이언", "1234", Level.GOLD, 100, 100)
 		);
 	}
@@ -69,8 +69,8 @@ public class UserServiceTest {
 		userService.upgradeLevels();
 		
 		checkLevel(users.get(0), Level.BASIC);
-		checkLevel(users.get(1), Level.SIVER);
-		checkLevel(users.get(2), Level.SIVER);
+		checkLevel(users.get(1), Level.SILVER);
+		checkLevel(users.get(2), Level.SILVER);
 		checkLevel(users.get(3), Level.GOLD);
 		checkLevel(users.get(4), Level.GOLD);
 	}
