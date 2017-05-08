@@ -29,8 +29,8 @@ public class UserService {
 	}
 	
 	private void upgradeLevel(User user) {
-		if (user.getLevel() == Level.BASIC) user.setLevel(Level.SIVER);
-		else if (user.getLevel() == Level.SIVER) user.setLevel(Level.GOLD);
+		if (user.getLevel() == Level.BASIC) user.setLevel(Level.SILVER);
+		else if (user.getLevel() == Level.SILVER) user.setLevel(Level.GOLD);
 		userDao.update(user);
 	}
 	
@@ -40,7 +40,7 @@ public class UserService {
 		switch(currentLevel)
 		{
 			case BASIC: return (user.getLogin() >= 50);
-			case SIVER: return (user.getRecommend() >= 30);
+			case SILVER: return (user.getRecommend() >= 30);
 			case GOLD: return false;
 			default: throw new IllegalArgumentException("Unknow Level: " + currentLevel);
 		}
