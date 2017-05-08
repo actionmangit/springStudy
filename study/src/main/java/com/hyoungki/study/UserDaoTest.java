@@ -59,7 +59,29 @@ public class UserDaoTest
 		jdbcContext.setDataSource(dataSource);
 		
 		dao.setDataSource(dataSource);
+    }	
+    
+    @Test
+    public void update() {
+    	dao.deleteAll();
+    	
+    	dao.add(user1);
+    	dao.add(user2);
+    	
+    	user1.setName("횽개");
+    	user1.setPassword("HKdog");
+    	user1.setLevel(Level.GOLD);
+    	user1.setLogin(1000);
+    	user1.setRecommend(999);
+    	
+    	dao.update(user1);
+    	
+    	User	user1update	= dao.get(user1.getId());
+    	checkSameUser(user1, user1update);
+    	User	user2same	= dao.get(user2.getId());
+    	checkSameUser(user2, user2same);
     }
+    
 
 //    @Test
 //    public void duplicateKey() {
@@ -114,7 +136,7 @@ public class UserDaoTest
     }
     
 	@Test
-	public void andAndGet() throws ClassNotFoundException, SQLException {
+	public void addAndGet() throws ClassNotFoundException, SQLException {
 		
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
