@@ -47,7 +47,7 @@ public class UserDaoTest
     @Before
     public void setUp() {
 		this.user1	= new User("kimbo", "김보", "1234", Level.BASIC, 1, 0);
-		this.user2	= new User("lhk", "횽긔", "1234", Level.SIVER, 55, 10);
+		this.user2	= new User("lhk", "횽긔", "1234", Level.SILVER, 55, 10);
 		this.user3	= new User("mung", "뭉이", "1234", Level.GOLD, 100, 40);
 		
 		dao				= new UserDaoJdbc();
