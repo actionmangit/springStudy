@@ -19,6 +19,9 @@ import com.hyoungki.study.domain.Level;
 import com.hyoungki.study.domain.User;
 import com.hyoungki.study.service.UserService;
 
+import static com.hyoungki.study.service.UserService.MIN_LOGCOUNT_FOR_SILVER;
+import static com.hyoungki.study.service.UserService.MIN_RECOMMEND_FOR_GOLD;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="/test-applicationContext.xml")
 public class UserServiceTest {
@@ -34,11 +37,11 @@ public class UserServiceTest {
 	@Before
 	public void setUp() {
 		users	= Arrays.asList(
-				new User("kimbo", "김보", "1234", Level.BASIC, 49, 0), 
-				new User("lhk", "횽긔", "1234", Level.BASIC, 50, 0), 
-				new User("mung", "뭉이", "1234", Level.SILVER, 60, 29),	
-				new User("beck", "백도르", "1234", Level.SILVER, 60, 30),
-				new User("lion", "라이언", "1234", Level.GOLD, 100, 100)
+				new User("kimbo", "김보", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0), 
+				new User("lhk", "횽긔", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0), 
+				new User("mung", "뭉이", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD - 1),	
+				new User("beck", "백도르", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
+				new User("lion", "라이언", "1234", Level.GOLD, 100, Integer.MAX_VALUE)
 		);
 	}
 	
