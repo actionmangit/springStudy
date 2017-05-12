@@ -2,10 +2,12 @@ package com.hyoungki.study;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.List;
+
+import javax.sql.DataSource;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hyoungki.study.dao.UserDao;
 import com.hyoungki.study.domain.Level;
 import com.hyoungki.study.domain.User;
+import com.hyoungki.study.service.UserLevelUpgradePolicy;
 import com.hyoungki.study.service.UserService;
 
 import static com.hyoungki.study.service.UserService.MIN_LOGCOUNT_FOR_SILVER;
@@ -32,18 +35,60 @@ public class UserServiceTest {
 	@Autowired
 	UserDao	userDao;
 	
+	@Autowired
+	UserLevelUpgradePolicy userLevelUpgradePolicy;
+
+	@Autowired
+	DataSource	dataSource;
+	
 	List<User>	users;
+    
+	static class TestUserService extends UserService {
+		private String id;
+		
+		private TestUserService(String id) {
+			this.id	= id;
+		}
+		
+		protected void upgradeLevel(User user) {
+			if (user.getId().equals(this.id)) throw new TestUserServiceException();
+			super.upgradeLevel(user);
+		}
+	}
+	
+	static class TestUserServiceException extends RuntimeException {
+	}	
 	
 	@Before
 	public void setUp() {
 		users	= Arrays.asList(
-				new User("kimbo", "김보", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0), 
-				new User("lhk", "횽긔", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0), 
-				new User("mung", "뭉이", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD - 1),	
-				new User("beck", "백도르", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
-				new User("lion", "라이언", "1234", Level.GOLD, 100, Integer.MAX_VALUE)
+				new User("beck", "백도르", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0), 
+				new User("kimbo", "김보", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0), 
+				new User("lhk", "횽긔", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD - 1),	
+				new User("lion", "라이언", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
+				new User("mung", "뭉이", "1234", Level.GOLD, 100, Integer.MAX_VALUE)
 		);
 	}
+	
+    @Test
+    public void upgradeAllOrNothing() throws Exception {
+    	UserService testUserService	= new TestUserService(users.get(3).getId());
+    	testUserService.setUserDao(this.userDao);
+    	testUserService.setUserLevelUpgradePolicy(userLevelUpgradePolicy);
+    	testUserService.setDataSource(dataSource);
+    	
+    	userDao.deleteAll();
+    	for(User user : users) userDao.add(user);
+
+    	try {
+    		testUserService.upgradeLevels();
+    		fail("TestUserServiceException expected");
+    	}
+    	catch(TestUserServiceException e) {
+    	}
+    	
+    	checkLevelUpgraded(users.get(1), false);
+    }	
 	
 	@Test
 	public void add() {
@@ -64,7 +109,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void upgradeLevels() {
+	public void upgradeLevels() throws Exception {
 		userDao.deleteAll();
 		
 		for(User user : users) userDao.add(user);

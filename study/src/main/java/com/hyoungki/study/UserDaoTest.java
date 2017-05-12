@@ -28,6 +28,7 @@ import com.hyoungki.study.dao.JdbcContext;
 import com.hyoungki.study.dao.UserDaoJdbc;
 import com.hyoungki.study.domain.Level;
 import com.hyoungki.study.domain.User;
+import com.hyoungki.study.service.UserService;
 
 public class UserDaoTest 
 {
@@ -43,7 +44,7 @@ public class UserDaoTest
 	public static void main( String[] args ) throws ClassNotFoundException, SQLException {
         JUnitCore.main("com.hyoungki.study.UserDaoTest");
     }
-    
+	
     @Before
     public void setUp() {
 		this.user1	= new User("kimbo", "김보", "1234", Level.BASIC, 1, 0);

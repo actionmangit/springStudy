@@ -14,6 +14,11 @@
 
 	<bean id="userService" class="com.hyoungki.study.service.UserService">
 		<property name="userDao" ref="userDao"/>
+		<property name="userLevelUpgradePolicy" ref="userLevelUpgradePolicy"/>
+	</bean>
+
+	<bean id="userLevelUpgradePolicy" class="com.hyoungki.study.service.UserLevelUpgradeDefaultPolicy">
+		<property name="userDao" ref="userDao"/>
 	</bean>
 	
 	<bean id="userDao" class="com.hyoungki.study.dao.UserDaoJdbc" >
