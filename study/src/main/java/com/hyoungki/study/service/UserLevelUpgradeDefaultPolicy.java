@@ -17,6 +17,9 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
 public class UserLevelUpgradeDefaultPolicy implements UserLevelUpgradePolicy{
 
 	UserDao	userDao;
@@ -44,24 +47,16 @@ public class UserLevelUpgradeDefaultPolicy implements UserLevelUpgradePolicy{
 	}
 	
 	private void sendUpgradeEmail(User user) {
-		Properties		props	= new Properties();
-		props.put("mail.smtp.host", "mail.ksug.org");
-		Session			s		= Session.getInstance(props, null);
+		JavaMailSenderImpl		mailSender	= new JavaMailSenderImpl();
+		mailSender.setHost("mail.server.com");
 		
-		MimeMessage		message	= new MimeMessage(s);
-
-		try {
-			message.setFrom(new InternetAddress("lhk0023@uprism.com"));
-			message.addRecipient(Message.RecipientType.TO, 
-					new InternetAddress(user.getEmail()));
-			message.setSubject("Upgrade 안내");
-			message.setText("사용자님의 등급이 " + user.getLevel().name() + "로 업그레이드 되었습니다.");
-			
-			Transport.send(message);
-		} catch (AddressException e) {
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
+		SimpleMailMessage	mailMessage	= new SimpleMailMessage();
+		
+		mailMessage.setTo(user.getEmail());
+		mailMessage.setFrom("lhk0023@uprism.com");
+		mailMessage.setSubject("Upgrade 안내");
+		mailMessage.setText("사용자님의 등급이 " + user.getLevel().name() + "로 업그레이드 되었습니다.");
+		
+		mailSender.send(mailMessage);
 	}
 }
