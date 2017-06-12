@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.hyoungki.study.dao.UserDao;
 import com.hyoungki.study.domain.Level;
@@ -39,7 +40,7 @@ public class UserServiceTest {
 	UserLevelUpgradePolicy userLevelUpgradePolicy;
 
 	@Autowired
-	DataSource	dataSource;
+	PlatformTransactionManager transactionManager;
 	
 	List<User>	users;
     
@@ -62,11 +63,11 @@ public class UserServiceTest {
 	@Before
 	public void setUp() {
 		users	= Arrays.asList(
-				new User("beck", "백도르", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0), 
-				new User("kimbo", "김보", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0), 
-				new User("lhk", "횽긔", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD - 1),	
-				new User("lion", "라이언", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
-				new User("mung", "뭉이", "1234", Level.GOLD, 100, Integer.MAX_VALUE)
+				new User("beck", "백도르", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0, "beck@naver.com"), 
+				new User("kimbo", "김보", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0, "kimbo@naver.com"), 
+				new User("lhk", "횽긔", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD - 1, "lhk@naver.com"),	
+				new User("lion", "라이언", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD, "lion@naver.com"),
+				new User("mung", "뭉이", "1234", Level.GOLD, 100, Integer.MAX_VALUE, "mung@naver.com")
 		);
 	}
 	
@@ -75,7 +76,7 @@ public class UserServiceTest {
     	UserService testUserService	= new TestUserService(users.get(3).getId());
     	testUserService.setUserDao(this.userDao);
     	testUserService.setUserLevelUpgradePolicy(userLevelUpgradePolicy);
-    	testUserService.setDataSource(dataSource);
+    	testUserService.setTransactionManager(transactionManager);
     	
     	userDao.deleteAll();
     	for(User user : users) userDao.add(user);
